@@ -1,7 +1,6 @@
 package com.company.fitnessproject.entity;
 
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,11 +14,10 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @ToString
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class Gym extends BaseEntity{
+public class Gym extends BaseEntity {
     @Column(name = "description")
-    String description;
+    private String description;
 
     @Column(name = "address")
-    String address;
+    private String address;
 }

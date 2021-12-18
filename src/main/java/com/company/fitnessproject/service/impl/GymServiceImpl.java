@@ -1,10 +1,11 @@
 package com.company.fitnessproject.service.impl;
 
-import com.company.fitnessproject.entity.Gym;
+import com.company.fitnessproject.converter.GymConverter;
+import com.company.fitnessproject.dto.GymDto;
+import com.company.fitnessproject.dto.ResponseGym;
 import com.company.fitnessproject.repository.GymRepository;
 import com.company.fitnessproject.service.GymService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,19 +14,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GymServiceImpl implements GymService {
     final GymRepository gymRepository;
+    final GymConverter gymConverter;
 
     @Override
-    public Gym save(Gym gym) {
-        return gymRepository.save(gym);
+    public ResponseGym save(GymDto gymDto) {
+        return gymConverter.toResponseDto(gymRepository.save(gymConverter.toEntity(gymDto)));
     }
 
     @Override
-    public List<Gym> getAll() {
-        return gymRepository.findAll();
+    public List<ResponseGym> getAll() {
+        return gymConverter.toResponsesDto(gymRepository.findAll());
     }
 
     @Override
-    public Gym getById(Long id) {
-        return gymRepository.findById(id).get();
+    public ResponseGym findById(Long id) {
+        return gymConverter.toResponseDto(gymRepository.findById(id).get());
+    }
+
+    @Override
+    public ResponseGym deleteById(Long id) {
+        return null;
     }
 }

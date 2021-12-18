@@ -1,13 +1,11 @@
 package com.company.fitnessproject.service.impl;
 
-import com.company.fitnessproject.entity.Subscription;
-import com.company.fitnessproject.entity.UserData;
+import com.company.fitnessproject.converter.UserDataConverter;
+import com.company.fitnessproject.dto.ResponseUserData;
+import com.company.fitnessproject.dto.UserDataDto;
 import com.company.fitnessproject.repository.UserDataRepository;
 import com.company.fitnessproject.service.UserDateService;
-import com.company.fitnessproject.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,37 +14,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserDataService implements UserDateService {
     final UserDataRepository userDataRepository;
-    final UserService userService;
+    final UserDataConverter userDataConverter;
 
     @Override
-    public UserData save(UserData userData) {
-        return userDataRepository.save(userData);
+    public ResponseUserData save(UserDataDto userDataDto) {
+        return userDataConverter.toResponseDto(userDataRepository.save(userDataConverter.toEntity(userDataDto)));
     }
 
     @Override
-    public UserData saveSub(Subscription subscription) {
-        UserData userData = new UserData();
-        userData.setSubscription(subscription);
-        userData.setId(userDataRepository.getByUserData(SecurityContextHolder.getContext().getAuthentication().getName()));
-        return userDataRepository.save(userData);
+    public List<ResponseUserData> getAll() {
+        return userDataConverter.toResponsesDto(userDataRepository.findAll());
     }
 
     @Override
-    public List<UserData> getAll() {
-        return userDataRepository.findAll();
+    public ResponseUserData findById(Long id) {
+        return userDataConverter.toResponseDto(userDataRepository.findById(id).get());
     }
 
     @Override
-    public UserData findById(Long id) {
-        return userDataRepository.findById(id).get();
-    }
-
-    @Override
-    public UserData deleteById(Long id) {
-        UserData userData = findById(id);
-        if (userData != null) {
-            userDataRepository.deleteById(id);
-        }
-        return userData;
+    public ResponseUserData deleteById(Long id) {
+        return null;
     }
 }

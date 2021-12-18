@@ -1,21 +1,7 @@
 package com.company.fitnessproject.service;
 
-import com.company.fitnessproject.entity.Subscription;
-import com.company.fitnessproject.enums.TypeMode;
-import com.company.fitnessproject.enums.TypeSubscription;
+import com.company.fitnessproject.dto.ResponseSubscription;
+import com.company.fitnessproject.dto.SubscriptionDto;
 
-import java.util.List;
-
-public interface SubscriptionService {
-    Subscription save(Subscription subscription);
-
-    List<Subscription> getByTypeMode(TypeMode typeMode);
-
-    List<Subscription> getByTypeSubscription(TypeSubscription typeSubscription);
-
-    List<Subscription> getAll();
-
-    Subscription findById(Long id);
-
-    Subscription deleteById(Long id);
+public interface SubscriptionService extends BaseService<ResponseSubscription, SubscriptionDto> {
 }

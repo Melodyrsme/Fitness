@@ -1,7 +1,6 @@
 package com.company.fitnessproject.entity;
 
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,12 +13,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class LogTraining extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    User user;
+    private User user;
 
     @Column(name = "training_time")
-    LocalDateTime trainingTime;
+    private LocalDateTime trainingTime;
 }

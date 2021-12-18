@@ -1,15 +1,7 @@
 package com.company.fitnessproject.service;
 
-import com.company.fitnessproject.entity.Gym;
-import com.company.fitnessproject.repository.GymRepository;
-import org.springframework.stereotype.Service;
+import com.company.fitnessproject.dto.GymDto;
+import com.company.fitnessproject.dto.ResponseGym;
 
-import java.util.List;
-
-public interface GymService {
-    Gym save(Gym gym);
-
-    List<Gym> getAll();
-
-    Gym getById(Long id);
+public interface GymService extends BaseService<ResponseGym, GymDto> {
 }

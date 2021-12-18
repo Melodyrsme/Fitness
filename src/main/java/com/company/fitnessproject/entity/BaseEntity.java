@@ -1,10 +1,8 @@
 package com.company.fitnessproject.entity;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,18 +11,17 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @Column(name = "create_time", nullable = false)
-    LocalDateTime createTime;
+    private LocalDateTime createTime;
 
     @Column(name = "update_time")
-    LocalDateTime updateTime;
+    private LocalDateTime updateTime;
 
     @PrePersist
     public void prePersist() {

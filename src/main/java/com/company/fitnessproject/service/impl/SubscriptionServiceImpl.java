@@ -1,9 +1,9 @@
 package com.company.fitnessproject.service.impl;
 
-import com.company.fitnessproject.entity.Subscription;
-import com.company.fitnessproject.enums.TypeMode;
-import com.company.fitnessproject.enums.TypeSubscription;
-import com.company.fitnessproject.repository.SubscriptioRepository;
+import com.company.fitnessproject.converter.SubscriptionConverter;
+import com.company.fitnessproject.dto.ResponseSubscription;
+import com.company.fitnessproject.dto.SubscriptionDto;
+import com.company.fitnessproject.repository.SubscriptionRepository;
 import com.company.fitnessproject.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,48 +13,26 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SubscriptionServiceImpl implements SubscriptionService {
-    final SubscriptioRepository subscriptionRepository;
+    private final SubscriptionRepository subscriptionRepository;
+    private final SubscriptionConverter subscriptionConverter;
 
     @Override
-    public Subscription save(Subscription subscription) {
-        return subscriptionRepository.save(subscription);
+    public ResponseSubscription save(SubscriptionDto subscriptionDto) {
+        return subscriptionConverter.toResponseDto(subscriptionRepository.save(subscriptionConverter.toEntity(subscriptionDto)));
     }
 
     @Override
-    public List<Subscription> getByTypeMode(TypeMode typeMode) {
-        Subscription subscription = null;
-        if(subscription.getTypeMode().equals(typeMode)){
-            return subscriptionRepository.findAll();
-        }
-        else
-            return null;
+    public List<ResponseSubscription> getAll() {
+        return subscriptionConverter.toResponsesDto(subscriptionRepository.findAll());
     }
 
     @Override
-    public List<Subscription> getByTypeSubscription(TypeSubscription typeSubscription) {
-        Subscription subscription = null;
-        if(subscription.getTypeSubscription().equals(typeSubscription)){
-            return subscriptionRepository.findAll();
-        }
-        else
-            return null;
+    public ResponseSubscription findById(Long id) {
+        return subscriptionConverter.toResponseDto(subscriptionRepository.findById(id).get());
     }
 
     @Override
-    public List<Subscription> getAll() {
-        return subscriptionRepository.findAll();
-    }
-
-    @Override
-    public Subscription findById(Long id) {
-        return subscriptionRepository.findById(id).get();
-    }
-
-    @Override
-    public Subscription deleteById(Long id) {
-        Subscription subscription = findById(id);
-        if(subscription != null)
-            subscriptionRepository.deleteById(id);
-        return subscription;
+    public ResponseSubscription deleteById(Long id) {
+        return null;
     }
 }

@@ -1,8 +1,6 @@
 package com.company.fitnessproject.entity;
 
-
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
@@ -14,28 +12,27 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserData extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "subscription_id")
-    Subscription subscription;
+    private Subscription subscription;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
-    User user;
+    private User user;
 
     @Column(name = "full_name", nullable = false)
-    String fullName;
+    private String fullName;
 
     @Column(name = "age")
-    Long age;
+    private Long age;
 
     @Column(name = "phone_number", unique = true)
-    String phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "address")
-    String address;
+    private String address;
 
     @Column(name = "count")
-    Long count;
+    private Long count;
 }

@@ -1,6 +1,7 @@
 package com.company.fitnessproject.controllers;
 
-import com.company.fitnessproject.entity.Gym;
+import com.company.fitnessproject.dto.GymDto;
+import com.company.fitnessproject.dto.ResponseGym;
 import com.company.fitnessproject.service.GymService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -11,20 +12,20 @@ import java.util.List;
 @RequestMapping("/api/gym")
 @RequiredArgsConstructor
 public class GymController {
-    final GymService gymService;
+    private final GymService gymService;
 
     @PostMapping
-    public Gym save(@RequestBody Gym gym){
-        return gymService.save(gym);
+    public ResponseGym save(@RequestBody GymDto gymDto) {
+        return gymService.save(gymDto);
     }
 
     @GetMapping
-    public List<Gym> getAll() {
+    public List<ResponseGym> getAll() {
         return gymService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Gym getById(@PathVariable Long id) {
-        return gymService.getById(id);
+    public ResponseGym getById(@PathVariable Long id) {
+        return gymService.findById(id);
     }
 }
