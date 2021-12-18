@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "subscription")
+@Table(name = "subscriptionGym")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,9 +18,6 @@ import java.math.BigDecimal;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Subscription extends BaseEntity{
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    User user;
 
     @ManyToOne
     @JoinColumn(name = "gym_id", nullable = false)

@@ -17,6 +17,10 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserData extends BaseEntity {
     @OneToOne
+    @JoinColumn(name = "subscription_id")
+    Subscription subscription;
+
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     User user;
 
@@ -32,6 +36,6 @@ public class UserData extends BaseEntity {
     @Column(name = "address")
     String address;
 
-    @Column(name = "count", nullable = false)
+    @Column(name = "count")
     Long count;
 }
