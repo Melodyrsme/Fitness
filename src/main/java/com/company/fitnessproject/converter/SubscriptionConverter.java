@@ -3,10 +3,12 @@ package com.company.fitnessproject.converter;
 import com.company.fitnessproject.dto.ResponseSubscription;
 import com.company.fitnessproject.dto.SubscriptionDto;
 import com.company.fitnessproject.entity.Subscription;
-import com.company.fitnessproject.enums.TypeMode;
+import com.company.fitnessproject.entity.User;
 import com.company.fitnessproject.enums.TypeSubscription;
 import com.company.fitnessproject.repository.GymRepository;
+import com.company.fitnessproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,10 +19,11 @@ import java.util.List;
 public class SubscriptionConverter {
     private final GymRepository gymRepository;
     private final GymConverter gymConverter;
+    private final UserRepository userRepository;
+    private final UserConverter userConverter;
 
     public Subscription toEntity(SubscriptionDto subscriptionDto) {
         TypeSubscription typeSubscription;
-        TypeMode typeMode;
         if (TypeSubscription.ONE_MONTH_SUB.ordinal() == subscriptionDto.getTypeSubscriptionId()) {
             typeSubscription = TypeSubscription.ONE_MONTH_SUB;
         } else if (TypeSubscription.THREE_MONTH_SUB.ordinal() == subscriptionDto.getTypeSubscriptionId())
@@ -29,25 +32,19 @@ public class SubscriptionConverter {
             typeSubscription = TypeSubscription.SIX_MONTH_SUB;
         else typeSubscription = TypeSubscription.YEAR_SUB;
 
-        if (TypeMode.AFTERNOON.ordinal() == subscriptionDto.getTypeModId())
-            typeMode = TypeMode.AFTERNOON;
-        else typeMode = TypeMode.EVENING;
-
         return Subscription.builder()
+                .user(userRepository.findById(subscriptionDto.getUserId()).get())
                 .gym(gymRepository.findById(subscriptionDto.getGymId()).get())
                 .typeSubscription(typeSubscription)
-                .typeMode(typeMode)
-                .description(subscriptionDto.getDescription())
-                .price(subscriptionDto.getPrice())
-                .hasCoach(subscriptionDto.isHasCoach())
                 .build();
     }
 
     public ResponseSubscription toResponseDto(Subscription subscription) {
+        User user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         return ResponseSubscription.builder()
+                .responseUser(userConverter.toResponseDto(user))
                 .responseGym(gymConverter.toResponseDto(subscription.getGym()))
                 .typeSubscription(subscription.getTypeSubscription())
-                .typeMode(subscription.getTypeMode())
                 .description(subscription.getDescription())
                 .price(subscription.getPrice())
                 .hasCoach(subscription.isHasCoach())
@@ -59,8 +56,8 @@ public class SubscriptionConverter {
         for (Subscription subscription : subscriptions) {
             responseSubscription.add(ResponseSubscription.builder()
                     .responseGym(gymConverter.toResponseDto(subscription.getGym()))
+                    .responseUser(userConverter.toResponseDto(userRepository.findById(subscription.getUser().getId()).get()))
                     .typeSubscription(subscription.getTypeSubscription())
-                    .typeMode(subscription.getTypeMode())
                     .description(subscription.getDescription())
                     .price(subscription.getPrice())
                     .hasCoach(subscription.isHasCoach())

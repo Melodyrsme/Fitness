@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/get-token")
-    public String getToken(UserAuthDto userAuthDto) {
+    public String getToken(@RequestBody UserAuthDto userAuthDto) {
         return userService.getToken(userAuthDto);
     }
 

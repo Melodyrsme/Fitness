@@ -1,12 +1,13 @@
 package com.company.fitnessproject.controllers;
 
+import com.company.fitnessproject.dto.CheckCountSubDto;
 import com.company.fitnessproject.dto.ResponseSubscription;
 import com.company.fitnessproject.dto.SubscriptionDto;
-import com.company.fitnessproject.entity.Subscription;
 import com.company.fitnessproject.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -23,16 +24,6 @@ public class SubscriptionController {
     @GetMapping
     public List<ResponseSubscription> getAll() {
         return subscriptionService.getAll();
-    }
-
-    @PostMapping("/{id}")
-    public ResponseSubscription findById(Long id) {
-        return subscriptionService.findById(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public Subscription deleteById(Long id) {
-        return null;
     }
 
 }

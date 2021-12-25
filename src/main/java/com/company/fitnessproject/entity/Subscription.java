@@ -1,6 +1,5 @@
 package com.company.fitnessproject.entity;
 
-import com.company.fitnessproject.enums.TypeMode;
 import com.company.fitnessproject.enums.TypeSubscription;
 import lombok.*;
 
@@ -20,19 +19,22 @@ public class Subscription extends BaseEntity{
     @JoinColumn(name = "gym_id", nullable = false)
     private Gym gym;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type_subscription", nullable = false)
     private TypeSubscription typeSubscription;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type_mode", nullable = false)
-    private TypeMode typeMode;
 
     @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
+
+    @Column(name = "count")
+    private Long count;
 
     @Column(name = "has_coach")
     private boolean hasCoach;

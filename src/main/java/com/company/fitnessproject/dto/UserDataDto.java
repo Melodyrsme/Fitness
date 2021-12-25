@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UserDataDto {
-    private Long subscriptionId;
-
     private String fullName;
 
     private Long age;
@@ -19,6 +17,4 @@ public class UserDataDto {
     private String phoneNumber;
 
     private String address;
-
-    private Long count;
 }

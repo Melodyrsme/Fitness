@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService {
         user.setIsActive(1L);
 
         userRoles.setUser(userRepository.save(user));
-        userRoles.setRole(roleRepository.findById(1L).get());
+        userRoles.setRole(roleRepository.findById(2L).get());
         userRolesRepository.save(userRoles);
 
         return userConverter.toResponseDto(user);
@@ -63,7 +64,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByLogin(userAuthDto.getLogin());
         boolean isTrue = passwordEncoder.matches(userAuthDto.getPassword(), user.getPassword());
         if (isTrue) {
-            return "Basic " + new String((userAuthDto.getLogin() + ":" + userAuthDto.getPassword()).getBytes());
+            return "Basic " + new String(Base64
+                    .getEncoder().encode((userAuthDto.getLogin() + ":" + userAuthDto.getPassword()).getBytes()));
         } else {
             throw new UserCheckPassword("Не верный логин или пароль.");
         }

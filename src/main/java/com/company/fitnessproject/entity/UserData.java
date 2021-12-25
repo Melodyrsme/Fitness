@@ -32,7 +32,4 @@ public class UserData extends BaseEntity {
 
     @Column(name = "address")
     private String address;
-
-    @Column(name = "count")
-    private Long count;
 }

@@ -9,16 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponseUserData {
+public class CheckCountSubDto {
     private ResponseSubscription responseSubscription;
 
-    private ResponseUser responseUser;
-
-    private String fullName;
-
-    private Long age;
-
-    private String phoneNumber;
-
-    private String address;
+    private Long count;
 }

@@ -1,6 +1,5 @@
 package com.company.fitnessproject.dto;
 
-import com.company.fitnessproject.enums.TypeMode;
 import com.company.fitnessproject.enums.TypeSubscription;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,11 +17,10 @@ import java.math.BigDecimal;
 public class ResponseSubscription {
     ResponseGym responseGym;
 
-    @Enumerated(EnumType.STRING)
-    private TypeSubscription typeSubscription;
+    ResponseUser responseUser;
 
     @Enumerated(EnumType.STRING)
-    private TypeMode typeMode;
+    private TypeSubscription typeSubscription;
 
     private String description;
 

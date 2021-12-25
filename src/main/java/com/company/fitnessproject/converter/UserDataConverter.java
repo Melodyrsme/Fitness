@@ -2,6 +2,7 @@ package com.company.fitnessproject.converter;
 
 import com.company.fitnessproject.dto.ResponseUserData;
 import com.company.fitnessproject.dto.UserDataDto;
+import com.company.fitnessproject.entity.User;
 import com.company.fitnessproject.entity.UserData;
 import com.company.fitnessproject.repository.SubscriptionRepository;
 import com.company.fitnessproject.repository.UserRepository;
@@ -21,26 +22,26 @@ public class UserDataConverter {
     private final UserConverter userConverter;
 
     public UserData toEntity(UserDataDto userDataDto) {
+        User user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+
         return UserData.builder()
-                .subscription(subscriptionRepository.findById(userDataDto.getSubscriptionId()).get())
-                .user(userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()))
+                .user(user)
+                .subscription(subscriptionRepository.getSubscriptionByUser(user.getId()))
                 .fullName(userDataDto.getFullName())
                 .address(userDataDto.getAddress())
                 .age(userDataDto.getAge())
                 .phoneNumber(userDataDto.getPhoneNumber())
-                .count(userDataDto.getCount())
                 .build();
     }
 
     public ResponseUserData toResponseDto(UserData userData) {
         return ResponseUserData.builder()
-                .responseSubscription(subscriptionConverter.toResponseDto(userData.getSubscription()))
-                .responseUser(userConverter.toResponseDto(userData.getUser()))
+                .responseSubscription(subscriptionConverter.toResponseDto(subscriptionRepository.getSubscriptionByUser(userData.getUser().getId())))
+                .responseUser(userConverter.toResponseDto(userRepository.findById(userData.getUser().getId()).get()))
                 .fullName(userData.getFullName())
                 .address(userData.getAddress())
                 .age(userData.getAge())
                 .phoneNumber(userData.getPhoneNumber())
-                .count(userData.getCount())
                 .build();
     }
 
@@ -54,7 +55,6 @@ public class UserDataConverter {
                     .address(userData.getAddress())
                     .age(userData.getAge())
                     .phoneNumber(userData.getPhoneNumber())
-                    .count(userData.getCount())
                     .build());
         }
         return responseUsers;

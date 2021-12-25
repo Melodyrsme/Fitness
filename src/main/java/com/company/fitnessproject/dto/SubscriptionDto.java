@@ -12,15 +12,13 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 public class SubscriptionDto {
-    Long gymId;
+    private Long gymId;
 
-    Long typeSubscriptionId;
+    private Long typeSubscriptionId;
 
-    Long typeModId;
-
-    private String description;
+    private Long userId;
 
     private BigDecimal price;
 
-    private boolean hasCoach;
+    private BigDecimal priceCoach;
 }
