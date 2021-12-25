@@ -26,7 +26,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         Subscription subscription = discounts(subscriptionDto);
 
         if (subscriptionDto.getPriceCoach() != null) {
-            subscription.setPrice(subscriptionDto.getPrice().add(BigDecimal.valueOf(1000L)));
+            subscription.setPrice(subscriptionDto.getPrice().add(BigDecimal.valueOf(5000L)));
             subscription.setHasCoach(true);
         }
         return subscriptionConverter.toResponseDto(subscriptionRepository.save(subscription));
